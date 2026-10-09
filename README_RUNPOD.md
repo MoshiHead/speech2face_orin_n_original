@@ -80,6 +80,7 @@ built; the server still works.
 | `nvidia-smi not found` | the pod was started without a GPU, or without the NVIDIA runtime |
 | `int4 tinygemm : UNAVAILABLE` in the probe | normal on some architectures. The trunk then runs bf16 and needs ~26 GB of VRAM; pick a bigger GPU or accept the slower path |
 | `CUDA out of memory` at load | another process is holding VRAM (`nvidia-smi`), or the card is too small for the plan the probe chose |
+| `hf_transfer package is not available` | the image exports `HF_HUB_ENABLE_HF_TRANSFER=1`. `pip install -r requirements-x86-extra.txt` into `./env` (or re-run `./setup_env_x86.sh`); `prepare_x86.sh` also disables the accelerator itself when the package is missing |
 | step 2 of `prepare_x86.sh` fails | token wrong, or the HF account has not accepted the `nvidia/personaplex-7b-v1` licence |
 | no TensorRT engine | see `weights/trtexec_build.log`. Not fatal; the PyTorch SEANet decoder is used |
 | browser connects then disconnects | `sphn` must be 0.2.x and must be the **pip** one -- `src/pylibs` must not be on `PYTHONPATH` on x86 |

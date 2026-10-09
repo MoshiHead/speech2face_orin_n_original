@@ -18,6 +18,15 @@ PY="${PY:-$(cat "$HERE/.python_path")}"   # the Python prepare_x86.sh checked
 SNAP="$(cat "$HERE/.snap_path")"
 PORT="${PORT:-8991}"   # 8998 is refused by the server (reserved for a legacy production server)
 export HF_HOME="${HF_HOME:-$HERE/hf}"
+
+# RunPod (and other) images export HF_HUB_ENABLE_HF_TRANSFER=1; huggingface_hub then refuses to
+# download anything at all unless the hf_transfer package is importable. setup_env_x86.sh installs
+# it (requirements-x86-extra.txt), but if this Python does not have it, turn the accelerator off
+# instead of failing the download.
+if [ "${HF_HUB_ENABLE_HF_TRANSFER:-0}" != "0" ] && ! "$PY" -c 'import hf_transfer' 2>/dev/null; then
+  echo "    note: HF_HUB_ENABLE_HF_TRANSFER=1 but hf_transfer is not installed -> disabling it"
+  export HF_HUB_ENABLE_HF_TRANSFER=0
+fi
 # compiled-kernel caches next to the package so they survive on the persistent volume
 export TRITON_CACHE_DIR="${TRITON_CACHE_DIR:-$HERE/.cache/triton}" TORCHINDUCTOR_CACHE_DIR="${TORCHINDUCTOR_CACHE_DIR:-$HERE/.cache/inductor}"
 export DESIGN_A_DIR="$SRC/niloys" IMTALKER_DIR="$SRC/imtalker"

@@ -39,6 +39,15 @@ print(f"    python {sys.version.split()[0]} | torch {torch.__version__} (CUDA {t
 T
 echo "$PY" > "$HERE/.python_path"
 
+# RunPod (and other) images export HF_HUB_ENABLE_HF_TRANSFER=1; huggingface_hub then refuses to
+# download anything at all unless the hf_transfer package is importable. setup_env_x86.sh installs
+# it (requirements-x86-extra.txt), but if this Python does not have it, turn the accelerator off
+# instead of failing the download.
+if [ "${HF_HUB_ENABLE_HF_TRANSFER:-0}" != "0" ] && ! "$PY" -c 'import hf_transfer' 2>/dev/null; then
+  echo "    note: HF_HUB_ENABLE_HF_TRANSFER=1 but hf_transfer is not installed -> disabling it"
+  export HF_HUB_ENABLE_HF_TRANSFER=0
+fi
+
 log "2/6  base model from $BASE_REPO (~16 GB, gated: needs your token + accepted licence)"
 "$PY" - <<PYEOF || die "base download failed: is the token valid and the model licence accepted on HF?"
 import os

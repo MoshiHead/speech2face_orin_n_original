@@ -4,3 +4,7 @@
 # Keep sphn at 0.2.x: the server needs OpusStreamReader/Writer.
 sphn==0.2.1
 tensorrt-cu12==10.13.3.9
+# RunPod's images export HF_HUB_ENABLE_HF_TRANSFER=1, and huggingface_hub then REFUSES to
+# download at all unless this package is present. It is also simply faster for the ~19 GB of
+# weights, so install it rather than turning the accelerator off.
+hf_transfer==0.1.9
