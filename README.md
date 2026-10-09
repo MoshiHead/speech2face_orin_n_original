@@ -21,6 +21,10 @@ This is the **best-audio Orin configuration** (the one in production on our Orin
 
 ---
 
+> **Running on an x86_64 GPU instead (RunPod, Lambda, a workstation)?** Use the `*_x86.sh`
+> scripts and see [README_RUNPOD.md](README_RUNPOD.md), or just open
+> [`runpod_speech2face.ipynb`](runpod_speech2face.ipynb). The Jetson scripts below are unchanged.
+
 ## Quick start (exact commands)
 
 ```bash
@@ -157,6 +161,9 @@ tools/             test_session.py + test_question.wav (headless end-to-end chec
 setup_env.sh       creates the Python env in ./env (Miniforge, Python 3.10, Jetson torch, requirements)
 requirements-jetson-torch.txt   torch/torchaudio/torchvision/triton -- NVIDIA Jetson index only
 requirements.txt   the other Python packages
+setup_env_x86.sh, prepare_x86.sh, run_x86.sh, run_watchdog_x86.sh   the same three steps on x86_64 (README_RUNPOD.md)
+requirements-x86-torch.txt, requirements-x86-extra.txt   torch for CUDA 12.8, plus sphn/TensorRT from pip
+runpod_speech2face.ipynb   one-notebook RunPod run (clone -> env -> weights -> server -> HTTPS URL)
 env/, .miniforge/  created by setup_env.sh
 hf/, weights/      created by prepare.sh (weights/ also holds the device-built TensorRT engine)
 captures/, crashlogs/, run.log         created at run time

@@ -1,0 +1,6 @@
+# x86_64 extras that on a Jetson come from JetPack or the bundled wheel:
+#   sphn      -> bundled aarch64 .so in src/pylibs on the Orin; PyPI has an x86_64 wheel
+#   tensorrt  -> JetPack on the Orin; pip wheel (bundles its own CUDA 12 libs) here
+# Keep sphn at 0.2.x: the server needs OpusStreamReader/Writer.
+sphn==0.2.1
+tensorrt-cu12==10.13.3.9

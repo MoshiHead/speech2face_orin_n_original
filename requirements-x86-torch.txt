@@ -1,0 +1,11 @@
+# x86_64 (RunPod / any desktop NVIDIA GPU) torch stack -- CUDA 12.8 builds.
+# cu128 covers Ampere (A100/A6000), Ada (4090/L40S) and Blackwell (5090/B200, sm_120).
+# Same versions as the Jetson build so the rest of requirements.txt matches exactly.
+#     pip install -r requirements-x86-torch.txt
+# The +cu128 local version makes the pin unambiguous even with PyPI as an extra index.
+--index-url https://download.pytorch.org/whl/cu128
+--extra-index-url https://pypi.org/simple
+torch==2.8.0+cu128
+torchaudio==2.8.0+cu128
+torchvision==0.23.0+cu128
+triton==3.4.0
