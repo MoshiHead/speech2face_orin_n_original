@@ -1,0 +1,8 @@
+# NVIDIA's Jetson builds (JetPack 6, CUDA 12.6) -- install ONLY from this index, never from PyPI:
+#     pip install --no-deps -r requirements-jetson-torch.txt
+# (PyPI also has torch 2.8.0 for aarch64, but it is a CPU-only build: torch.cuda is unavailable.)
+--index-url https://pypi.jetson-ai-lab.io/jp6/cu126
+torch==2.8.0
+torchaudio==2.8.0
+torchvision==0.23.0
+triton==3.4.0
